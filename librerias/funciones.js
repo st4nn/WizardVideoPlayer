@@ -34,8 +34,8 @@ function btn_Previsualizar(evento)
 				Servidor: $("#txtServidor").val(),
 				Autostart : AutoStartvar,
 				Panel : $("#cboUbicacionPanel").val(),
-				Ancho : $("#txtAlto").val(),
-				Alto : $("#txtAncho").val()
+				Ancho : $("#txtAncho").val(),
+				Alto : $("#txtAlto").val()
 			}, 
 			function(data)
 			{	
@@ -43,8 +43,8 @@ function btn_Previsualizar(evento)
 				Shadowbox.open	({
 					player: 'html',
 					content: data,
-					height: $("#txtAncho").val() * 1.1,
-					width: $("#txtAlto").val() * 1.1
+					height: $("#txtAlto").val() * 1.1,
+					width: $("#txtAncho").val() * 1.1
 						});
 			});
 		} else
@@ -68,34 +68,39 @@ function btn_Generar(evento)
 		{
 			var AutoStartvar = $("#chkAutostart").is(':checked');
 
+			var codigo;
 			var url;
+			var Tipo;
 			if ($("#cboTipoCodigo").val() == "JavaScript")
 			{
 				url = "librerias/GenerarJS.php";
+				Tipo= "GenerarVideoJS";				
 			}else
 			{
 				url = "librerias/GenerarEmbed.php"	;
+				Tipo= 'GenerarVideoEmbed';
 			}
-			$.post(url,  
-				{
-					Stream : $("#txtStream").val(),
-					Titulo : $("#txtTitulo").val(),
-					Color_Atras : $("#txtColorPanel").val(),
-					Color_Frente : $("#txtColorBotones").val(),
-					Color_Luz : $("#txtColorSombras").val(),
-					Color_Pantalla : $("#txtColorPantalla").val(),
-					Skin : $("#cboSkin").val(),
-					Volumen: $("#txtVolumen").val(),
-					Servidor: $("#txtServidor").val(),
-					Autostart : AutoStartvar,
-					Panel : $("#cboUbicacionPanel").val(),
-					Ancho : $("#txtAlto").val(),
-					Alto : $("#txtAncho").val()
-				}, 
-				function(data)
-				{	
-					$("#txtCodigo").val(data);
-				});
+			
+			codigo = "<iframe src='http://bronco.cehis.net/generarplayer/" + Tipo + ".php?" +
+				"var1=" + $("#txtStream").val() + 
+				"&var2=" + $("#txtTitulo").val() + 
+				"&var3=" + $("#txtColorPanel").val() + 
+				"&var4=" + $("#txtColorBotones").val() + 
+				"&var5=" + $("#txtColorSombras").val() + 
+				"&var6=" + $("#txtColorPantalla").val() + 
+				"&var7=" + $("#cboSkin").val() + 
+				"&var8=" + $("#txtVolumen").val() + 
+				"&var9=" + $("#txtServidor").val() + 
+				"&var10=" + AutoStartvar + 
+				"&var11=" + $("#cboUbicacionPanel").val() + 
+				"&var12=" + $("#txtAncho").val() + 
+				"&var13=" + $("#txtAlto").val() + "' name='CeHis Video PLayer'";
+			codigo += "width='" + $("#txtAncho").val() + "' height='" + $("#txtAlto").val() + "' scrolling='no' frameborder='0'>";
+			codigo += "<p>El Servicio no fue encontrado</p>";
+			codigo += "</iframe>";
+			
+			$("#txtCodigo").val(codigo);
+			
 		} else
 		{
 			alert("El campo Servidor no puede estar vacío");
